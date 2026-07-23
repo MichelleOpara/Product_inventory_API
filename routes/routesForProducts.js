@@ -2,9 +2,28 @@ const express = require('express');
 const router = express.Router();
 let products = require('../data/products.js');
 
-// Test route
+// GET all products
 router.get("/", (req, res) => {
-  res.send("Products route is working!");
+  res.status(200).json(products);
+});
+
+// POST create product
+router.post("/", (req, res) => {
+  const { name, price, quantity } = req.body;
+
+  const newProduct = {
+    id: products.length + 1,
+    name,
+    price,
+    quantity
+  };
+
+  products.push(newProduct);
+
+  res.status(201).json({
+    message: "Product created successfully",
+    product: newProduct
+  });
 });
 
 // PATCH 
